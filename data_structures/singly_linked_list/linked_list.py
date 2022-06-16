@@ -46,6 +46,58 @@ class LinkedList():
         new_node.next = prev_node.next
         prev_node.next = new_node
 
+    def delete_node(self, key):
+        current = self.head
+        
+        if current and current.data == key:
+            self.head = current.next
+            current = None
+            return
+        
+        while current and current.data != key:
+            previous = current
+            current = current.next
+
+        if current is None:
+            return
+        
+        previous.next = current.next
+        current = None
+
+    def delete_node_by_pos(self, pos):
+        if self.head:
+            current = self.head
+            
+            if pos == 0:
+                self.head = current.next
+                current = None
+                return
+            
+            count = 0
+            while current and count < pos:
+                previous = current
+                current = current.next
+                count += 1
+
+            if current is None:
+                return
+
+            previous.next = current.next
+            current = None
+
+    def len_iterative(self):
+        count = 0
+        current = self.head
+        while current.next:
+            current = current.next
+            count += 1
+        return count
+    
+    def len_recursive(self, current):
+        if not current:
+            return 0
+        return 1 + self.len_recursive(current.next)
+
 test = LinkedList()
 test.append('a')
 test.append('b')
@@ -56,3 +108,11 @@ test.insert_after_node_by_data('b', 'e')
 test.insert_after_node_by_pos(test.head.next, 'f')
 
 test.print_list()
+
+test.delete_node('b')
+test.print_list()
+
+test.delete_node_by_pos(0)
+test.print_list()
+
+print(test.len_recursive(test.head))
