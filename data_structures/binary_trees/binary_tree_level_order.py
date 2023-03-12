@@ -50,21 +50,47 @@ class Queue:
 #   def size(self):
 #     return len(self.items)
 
+class Stack:
+    def __init__(self):
+        self.items = []
+    def pop(self) -> Any:
+        if not self.is_empty():
+            return self.items.pop()
+    def is_empty(self) -> bool:
+        return len(self.items) == 0
+    def add(self, val) -> None:
+        self.items.append(val)
+    def __str__(self) -> str:
+        s = ""
+        while not self.is_empty():
+            s+=f"{str(self.pop())}-"
+        return s
+
 class BinaryTree(object):
     def __init__(self, root):
         self.root = Node(root)
 
-    def print(self, traversal_type: str) -> None:
+    def print(self, traversal_type: str) -> Any:
         if traversal_type == "levelorder":
             return self.level_order_print(self.root, Queue(), [])
+        if traversal_type == "reverselevelorder":
+            return self.reverse_level_order_print(self.root, Queue(), Stack())
 
-    def level_order_print(self, node: Node, queue: Queue, traversal: List[int]):
+    def level_order_print(self, node: Node, queue: Queue, traversal: List[int]) -> List[int]:
         if node:
             traversal.append(node.value)
             queue.extend([node.left, node.right])
             while not queue.is_empty():
                 self.level_order_print(queue.popleft(), queue, traversal)
         return traversal
+
+    def reverse_level_order_print(self, node: Node, queue: Queue, stack: Stack) -> str:
+        if node:
+            stack.add(node.value)
+            queue.extend([node.left, node.right])
+            while not queue.is_empty():
+                self.reverse_level_order_print(queue.popleft(), queue, stack)
+        return stack
 
 #               1
 #          /         \  
@@ -99,3 +125,4 @@ tree.root.right.right.left = Node(14)
 tree.root.right.right.right = Node(15)
 
 print(tree.print("levelorder"))
+print(tree.print("reverselevelorder"))
