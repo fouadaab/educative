@@ -92,6 +92,14 @@ class BinaryTree(object):
                 self.reverse_level_order_print(queue.popleft(), queue, stack)
         return stack
 
+    def height(self, node):
+        if node is None:
+            return -1
+        left_height = self.height(node.left)
+        right_height = self.height(node.right)
+
+        return 1 + max(left_height, right_height)
+
 #               1
 #          /         \  
 #         2           3  
@@ -126,3 +134,4 @@ tree.root.right.right.right = Node(15)
 
 print(tree.print("levelorder"))
 print(tree.print("reverselevelorder"))
+print(tree.height(tree.root))
