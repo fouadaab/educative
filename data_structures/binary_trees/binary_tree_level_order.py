@@ -16,11 +16,15 @@ class Queue:
     def extend(self, vals: List[Any]) -> None:
         self.queue.extend(vals)
     def popleft(self) -> Any:
-        return self.queue.pop(0)
+        if not self.is_empty():
+            return self.queue.pop(0)
     def pop(self) -> Any:
-        return self.queue.pop()
+        if not self.is_empty():
+            return self.queue.pop()
+    def __len__(self) -> int:
+        return len(self.queue)
     def is_empty(self) -> bool:
-        return not self.queue
+        return len(self) == 0
 
 # class Queue(object):
 #   def __init__(self):
