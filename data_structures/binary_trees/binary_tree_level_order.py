@@ -104,6 +104,17 @@ class BinaryTree(object):
         if node:
             return 1 + self.size_(node.left) + self.size_(node.right)
         return 0
+    
+    def is_bst_satisfied(self):
+        return BinaryTree._is_bst(self.root) == 0
+
+    @staticmethod
+    def _is_bst(node: Node):
+        if node:
+            if (node.left and node.value < node.left.value) or (node.right and node.value > node.right.value):
+                return 1
+            return BinaryTree._is_bst(node.left) + BinaryTree._is_bst(node.right)
+        return 0
 
 #               1
 #          /         \  
@@ -137,7 +148,8 @@ tree.root.right.left.right = Node(13)
 tree.root.right.right.left = Node(14)
 tree.root.right.right.right = Node(15)
 
-print(tree.print("levelorder"))
-print(tree.print("reverselevelorder"))
-print(tree.height(tree.root))
-print(tree.size_(tree.root))
+#print(tree.print("levelorder"))
+#print(tree.print("reverselevelorder"))
+#print(tree.height(tree.root))
+#print(tree.size_(tree.root))
+print(tree.is_bst_satisfied())
