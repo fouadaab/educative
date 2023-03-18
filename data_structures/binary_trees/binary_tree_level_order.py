@@ -99,6 +99,11 @@ class BinaryTree(object):
         right_height = self.height(node.right)
 
         return 1 + max(left_height, right_height)
+    
+    def size_(self, node: Node) -> int:
+        if node:
+            return 1 + self.size_(node.left) + self.size_(node.right)
+        return 0
 
 #               1
 #          /         \  
@@ -135,3 +140,4 @@ tree.root.right.right.right = Node(15)
 print(tree.print("levelorder"))
 print(tree.print("reverselevelorder"))
 print(tree.height(tree.root))
+print(tree.size_(tree.root))
